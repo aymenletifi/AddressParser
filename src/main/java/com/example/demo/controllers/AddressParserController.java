@@ -21,9 +21,13 @@ public class AddressParserController {
     Logger logger = LoggerFactory.getLogger(AddressParserController.class);
 
     // This route is for the developed from scratch Parser.
-    @PostMapping("/")
+    @PostMapping("/parse")
     public Map<String, String> parse(@RequestBody String address){
-        logger.info(address);
         return addressParserService.parse(address);
+    }
+
+    @PostMapping("/nlp")
+    public Map<String, String> parseWithNlp(@RequestBody String address){
+        return addressParserService.parseWithNlp(address);
     }
 }

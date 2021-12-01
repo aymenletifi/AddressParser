@@ -12,6 +12,12 @@ import org.springframework.stereotype.Service;
 
 import com.mapzen.jpostal.AddressExpander;
 
+import com.mapzen.jpostal.AddressParser;
+
+import com.mapzen.jpostal.ParsedComponent;
+
+
+
 
 @Service
 public class AddressParserService {
@@ -19,15 +25,6 @@ public class AddressParserService {
     Logger logger = LoggerFactory.getLogger(AddressParserService.class);
 
     public Map<String, String> parse(String address) {
-
-
-
-        // Singleton, libpostal setup is done in the constructor
-        AddressExpander e = AddressExpander.getInstance();
-        String[] expansions = e.expandAddress("Quatre vingt douze Ave des Champs-Élysées");
-
-        logger.info(expansions[0]);
-        
 
         String lowerCaseAddress = address.toLowerCase();
 
@@ -194,6 +191,30 @@ public class AddressParserService {
         result.put("housenumber", houseNumber.trim());
 
         return result;
+    }
+
+
+    // This function uses jpostal library to parse the address into several components.
+    public Map<String, String> parseWithNlp(String address){
+
+        HashMap<String, String> result = new HashMap<>();
+
+        // Singleton, parser setup is done in the constructor
+        AddressParser p = AddressParser.getInstance();
+        ParsedComponent[] components = p.parseAddress(address);
+        
+        for (ParsedComponent c : components) {
+
+            if (c.getLabel().equals("road")) {
+                result.put("street", c.getValue());
+            }
+            else {
+                result.put(c.getLabel(), c.getValue());
+            }
+            }
+
+        return result;
+
     }
 
 }
