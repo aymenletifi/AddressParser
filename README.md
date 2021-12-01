@@ -2,7 +2,7 @@
 
 
 You can find in the main branch the program that parses the addresses based on some logic and patterns I noticed using if else statements and regex.<br>
-Every reasoning is explained in the comments.
+Every reasoning is explained in the comments and there are some unit tests that try out the examples given in the challenge.
 
 In the second branch, you can find the added route '/nlp' that uses the NLP library jpostal based on a C library called Libpostal.<br>
 This is the original NLP library that I used : [https://github.com/openvenues/jpostal](https://github.com/openvenues/jpostal).
